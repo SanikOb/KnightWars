@@ -1,25 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Store from './services/store/Store';
+import Server from './services/server/Server';
+import Popup from './components/Popup/Popup';
+import PageManager from './pages/PageManager';
 
-function App() {
+export const StoreContext = React.createContext<Store>(null!);
+export const ServerContext = React.createContext<Server>(null!);
+
+const App: React.FC = () => {
+  const store = new Store();
+  const server = new Server(store);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StoreContext.Provider value={store}>
+      <ServerContext.Provider value={server}>
+        <div className='app'>
+          <Popup />
+          <PageManager />
+        </div>
+      </ServerContext.Provider>
+    </StoreContext.Provider>
   );
 }
 
