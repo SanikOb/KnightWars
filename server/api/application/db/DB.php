@@ -223,5 +223,5 @@ class DB {
         return $this->pdo->rollBack();
     }
 }
-}
+
 
